@@ -19,4 +19,4 @@ USER $USER_NAME
 WORKDIR $APP_HOME
 RUN bash -c 'touch MobiGo.war'
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","MobiGo.war"]
+ENTRYPOINT ["java","-jar","MobiGo.war"]
