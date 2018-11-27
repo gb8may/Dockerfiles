@@ -5,14 +5,18 @@ MAINTAINER Mayara Gouveia "mayara.gouveia@ifactory.com.br"
 VOLUME /tmp
 EXPOSE 8080
 
-ENV APP_HOME /root/PROD/mobigo/target/
-ENV SPRING_PROFILES_ACTIVE prod
+ENV SPRING_PROFILES_ACTIVE qa
+ENV USER_NAME user
+ENV APP_HOME /home/$USER_NAME/app
 
-RUN cd $APP_HOME
+RUN useradd -ms /bin/bash $USER_NAME
+RUN mkdir $APP_HOME
 
-ADD MobiGo.war $APP_HOME/MobiGo.war
+ADD target/MobiGo.war $APP_HOME/MobiGo.war
+RUN chown $USER_NAME $APP_HOME/MobiGo.war
 
+USER $USER_NAME
 WORKDIR $APP_HOME
-RUN java -jar MobiGo.war
+RUN bash -c 'touch MobiGo.war'
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","MobiGo.war"]
