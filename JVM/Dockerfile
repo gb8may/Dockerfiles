@@ -19,4 +19,4 @@ USER $USER_NAME
 WORKDIR $APP_HOME
 RUN bash -c 'touch XXX.war'
 
-ENTRYPOINT ["java","-jar","XXX.war"]
+ENTRYPOINT ["java","-jar","-Dspring.profiles.active=production","XXX.war"]
